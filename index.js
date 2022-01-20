@@ -28,6 +28,8 @@ $("document").ready(function () {
     );
     answerBlock.addClass("active-block");
     showOutput.text(answer);
+    expression = answer;
+    input.val(expression);
   });
   $(".keyboard-key-ac").click(function () {
     expression = "";
