@@ -2,21 +2,23 @@ $("document").ready(function () {
   let expression = "";
   let showInput = $(".input");
   let showOutput = $(".output");
-  let answerBlock = $(".answer-block-container");
+  let answer;
+
   $(".keyboard-key").click(function (e) {
-    answerBlock.removeClass("active-block");
+    showInput.removeClass("input-when-show-answer");
+    showOutput.removeClass("output-active-block");
     let textToAdd = $(e.target).val();
     expression += textToAdd;
     showInput.text(expression);
+    console.log(expression);
   });
   $(".keyboard-key-operator").click(function (e) {
-    answerBlock.removeClass("active-block");
     let textToAdd = $(e.target).parent().val();
     expression += textToAdd;
     showInput.text(expression);
   });
   $(".keyboard-key-enter").click(function () {
-    let answer = eval(
+    answer = eval(
       expression
         .split("")
         .map((letter) => {
@@ -26,14 +28,22 @@ $("document").ready(function () {
         })
         .join("")
     );
-    answerBlock.addClass("active-block");
+    showInput.addClass("input-when-show-answer");
+    showOutput.addClass("output-active-block");
     showOutput.text(answer);
+    expression = "";
     expression = answer;
-    input.val(expression);
+    $(".keyboard-key-operator").click(function (e) {
+      showInput.val(expression);
+    });
+    showInput.val(expression);
   });
   $(".keyboard-key-ac").click(function () {
     expression = "";
     showInput.text("");
+    showInput.removeClass("input-when-show-answer");
+    showOutput.removeClass("output-active-block");
+    showOutput.text("");
   });
   $(".keyboard-key-del").click(function () {
     let expressionList = expression.split("");
